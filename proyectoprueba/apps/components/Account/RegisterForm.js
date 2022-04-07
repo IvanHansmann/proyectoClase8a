@@ -2,23 +2,72 @@ import React, { useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { Input, Icon, Button } from 'react-native-elements' 
 import { validateEmail } from '../../utils/validation'
+import firebase from 'firebase'
+import { useNavigation } from '@react-navigation/native'
 
-export default function RegisterForm(){
+export default function RegisterForm(props){
+    const {toastRef} = props
     const [showPassword, setShowPassword] = useState(false)
     const [showRepeatPasssword, setShowRepeatPassword ] = useState(false)
     const [formData, setFormData] = useState(defaultFormValues())
+    const navigation = useNavigation()
 
     const onSubmit = () => {
         if(formData.email.length===0||formData.password.length===0||formData.repeatPassword.length===0){
-            console.log('Todos los campos tienen que ser llenados')
+            toastRef.current.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Empty',
+                text2:'Todos los campos son requeridos',
+                visibility: 3000,
+                // autoHide: true,
+                // topOffset: 30,
+                // bottomOffset: 40
+                // // onShow: () => {},
+                // // onHide: () => {},
+                // // onPress: () => {}
+            })
         } else if (!validateEmail(formData.email)){
-            console.log('El email no es correcto')
+            toastRef.current.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Password',
+                text2:'El email no es correcto',
+                visibility:3000
+            })
         } else if (formData.password !== formData.repeatPassword){
-            console.log('Las contraseñas deben de ser las mismas')
+            toastRef.current.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Password',
+                text2:'Las contraseñas tienen que ser iguales',
+                visibility:3000
+            })
         }else if (formData.password.length <6){
-            console.log('La contraseña debe de tener minimo 6 caracteres')
+            toastRef.current.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Password',
+                text2:'La contraseña tiene que tener mas de 6 caracteres',
+                visibility:3000
+            })
         } else{
-            console.log('Registro completado')  
+            firebase
+            .auth()
+            .createUserWithEmailAndPassword(formData.email, formData.password)
+            .then(()=>{
+                // <Loading isVisible = {true} text = 'Cargando...'/>
+                navigation.navigate('account')
+            })
+            .catch(()=>{
+                toastRef.current.show({
+                    type: 'error',
+                    position: 'top',
+                    text1: 'Cuenta',
+                    text2: 'Las credenciales no son correctas',
+                    visibilityTime: 3000
+                })
+            })
         }
     }
 

@@ -51,26 +51,27 @@ export default function Navigation(){
 
 function screenOptions(route, color){
     let iconName
-    switch (route.color) {
+    switch (route.name) {
+
         case 'restaurants':
-            iconName='compass-outline'        
-            break
+            iconName='compass-outline'
+            break;
 
         case 'favorite':
             iconName='heart-outline'        
-            break   
+            break;
 
         case 'account':
-            iconName='star-outline'        
-            break
+            iconName='star-outline'
+            break;
 
         case 'search':
-            iconName='magnify' 
-            break       
+            iconName='magnify'
+            break;
             
         case 'topRestaurant':
-            iconName='home-outline'        
-            break
+            iconName='home-outline'
+            break;
     }
     return(
         <Icon type='material-community' name={iconName} size={22} color={color}/>           
