@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { ListItem, Icon } from "react-native-elements";
 import Modal from "../Modal";
+import ChangeDisplayNameform from "../../screens/Account/ChangeDisplayNameform";
 
 export default function AccountOptions(props){
     const {userInfo, toastRef} = props
@@ -11,11 +12,16 @@ export default function AccountOptions(props){
     const selectedComponent = (key) => {
         switch(key){
             case 'displayName':
-                setRenderComponent(<Text>Cambiando nombre y apellido</Text>)
+                setRenderComponent(
+                <ChangeDisplayNameform
+                    displayname={userInfo.displayname}
+                    setShowModal={setShowModal}
+                    toastRef={toastRef}                   
+                 />)
                 setShowModal(true)
                 break
             case 'displayEmail':
-                setRenderComponent(<Text>Cambiando el correo</Text>)
+                setRenderComponent(<Text>Cambiando email</Text>)
                 setShowModal(true)
                 break
             case 'displayPassword':
