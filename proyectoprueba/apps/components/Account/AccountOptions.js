@@ -5,7 +5,7 @@ import Modal from "../Modal";
 import ChangeDisplayNameform from "../../screens/Account/ChangeDisplayNameform";
 
 export default function AccountOptions(props){
-    const {userInfo, toastRef} = props
+    const {userInfo, toastRef, setReloadUserInfo} = props
     const [showModal, setShowModal] =useState(true)
     const [renderComponent, setRenderComponent] = useState(null)
 
@@ -16,7 +16,8 @@ export default function AccountOptions(props){
                 <ChangeDisplayNameform
                     displayname={userInfo.displayname}
                     setShowModal={setShowModal}
-                    toastRef={toastRef}                   
+                    toastRef={toastRef}
+                    setReloadUserInfo={setReloadUserInfo}                   
                  />)
                 setShowModal(true)
                 break
