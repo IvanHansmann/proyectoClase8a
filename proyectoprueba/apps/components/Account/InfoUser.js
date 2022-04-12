@@ -6,7 +6,9 @@ import * as Permissions from 'expo-permissions'
 import * as ImagenPicker from 'expo-image-picker'
 
 export default function InfoUser(props){
-    const {userInfo: {photoURL, displayName, email}} = props
+    const {userInfo, toastRef } = props
+    const {uid, photoURL,displayName, email} = userInfo
+
 
     const changeAvatar= async ()=>{
         const resultPermissions = await Permissions.askAsync(Permissions.MEDIA_LIBRARY)
