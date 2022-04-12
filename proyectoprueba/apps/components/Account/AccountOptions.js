@@ -2,7 +2,9 @@ import React, {useState} from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { ListItem, Icon } from "react-native-elements";
 import Modal from "../Modal";
-import ChangeDisplayNameform from "../../screens/Account/ChangeDisplayNameform";
+import ChageDisplayNameForm from "./ChangeDisplayNameForm";
+import ChangeDisplayEmailForm from "./ChangeDisplayEmailForm";
+import ChangeDisplayPasswordForm from "./ChangeDisplayPasswordForm";
 
 export default function AccountOptions(props){
     const {userInfo, toastRef, setReloadUserInfo} = props
@@ -13,8 +15,8 @@ export default function AccountOptions(props){
         switch(key){
             case 'displayName':
                 setRenderComponent(
-                <ChangeDisplayNameform
-                    displayname={userInfo.displayname}
+                <ChageDisplayNameForm
+                    displayName={userInfo.displayName}
                     setShowModal={setShowModal}
                     toastRef={toastRef}
                     setReloadUserInfo={setReloadUserInfo}                   
@@ -22,16 +24,30 @@ export default function AccountOptions(props){
                 setShowModal(true)
                 break
             case 'displayEmail':
-                setRenderComponent(<Text>Cambiando email</Text>)
+                setRenderComponent(
+                <ChangeDisplayEmailForm
+                    displayEmail={userInfo.displayEmail}
+                    setShowModal={setShowModal}
+                    toastRef={toastRef}
+                    setReloadUserInfo={setReloadUserInfo}                      
+                />
+                )
                 setShowModal(true)
                 break
             case 'displayPassword':
-                setRenderComponent(<Text>Cambiando contraseña</Text>)
+                setRenderComponent(
+                <ChangeDisplayPasswordForm
+                displayPassword={userInfo.displayPassword}
+                setShowModal={setShowModal}
+                toastRef={toastRef}    
+                />
+                )
                 setShowModal(true)
                 break
             default:
                 setRenderComponent(null)
                 setShowModal(false)
+                break
         }
 
     }

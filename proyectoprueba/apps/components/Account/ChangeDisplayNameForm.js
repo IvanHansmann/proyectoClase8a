@@ -13,7 +13,7 @@ export default function ChageDisplayNameForm(props){
         setError(null)
         if(!newDisplayName){
             setError('El nombre no puede estar vacio')
-        } else if(displayName === newDisplayName){
+        } else if(newDisplayName === displayName){
             setError('El nombre no puede ser igual al actual')
         } else {
             setIsLoading(true)
@@ -21,8 +21,16 @@ export default function ChageDisplayNameForm(props){
                 displayName: newDisplayName
             }
             firebase.auth()
-            .currentUser.updateProfile(update)
+            .currentUser
+            .updateProfile(update)
             .then(()=>{
+                toastRef.current.show({
+                    type: 'success',
+                    position: 'top',
+                    text1: 'Profile',
+                    text2: 'Se ha cambiado el nombre con exito',
+                    visibilityTime: 3000
+                }) 
                 console.log('Todo bien en firebase')
                 setIsLoading(false)
                 setReloadUserInfo(true)
